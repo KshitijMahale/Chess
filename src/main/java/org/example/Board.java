@@ -1,17 +1,27 @@
 package org.example;
 
+import org.example.pieces.Knight;
+import org.example.pieces.Piece;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Board extends JPanel {
     public int tileSize = 85;
     int cols=8;
     int rows=8;
 
+    ArrayList<Piece> pieceList = new ArrayList<>();
+
     public Board(){
         this.setPreferredSize(new Dimension(cols*tileSize, rows*tileSize));
+        addPieces();
     }
 
+    public void addPieces() {
+        pieceList.add(new Knight(this, 1, 0, false));
+    }
     public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
@@ -20,6 +30,10 @@ public class Board extends JPanel {
                 g2d.setColor((c+r) % 2 ==0 ? new Color(227, 198, 181) : new Color(157, 105, 53));
                 g2d.fillRect(c*tileSize, r*tileSize, tileSize, tileSize);
             }
+        }
+
+        for(Piece piece: pieceList){
+            piece.paint(g2d);
         }
     }
 
