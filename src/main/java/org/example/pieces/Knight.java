@@ -1,19 +1,22 @@
 package org.example.pieces;
 
-import org.example.Board;
-
-import java.awt.image.BufferedImage;
+import org.example.main.Board;
 
 public class Knight extends Piece{
-    public Knight(Board board, int col, int row, boolean isWhite){
+    public Knight(Board board, boolean isWhite, int x, int y) {
         super(board);
-        this.col = col;
-        this.row = row;
-        this.xPos = col*board.tileSize;
-        this.yPos = row* board.tileSize;
-
+        this.name = 'n';
+        this.val = board.knightVal;
         this.isWhite = isWhite;
-        this.name="Knight";
-        this.sprite = sheet.getSubimage(3*sheetScale, isWhite ? 0:sheetScale, sheetScale, sheetScale).getScaledInstance(board.tileSize, board.tileSize, BufferedImage.SCALE_SMOOTH);
+        this.sprite = sprites[isWhite ? wKnight : bKnight];
+        this.xPos = x * board.tileSize;
+        this.yPos = y * board.tileSize;
+        this.col = x;
+        this.row = y;
+        this.fenRepresentation = this.isWhite ? 'N' : 'n';
+    }
+
+    public boolean validMovement(int col, int row) {
+        return Math.abs(this.col - col) * Math.abs(this.row - row) == 2;
     }
 }
